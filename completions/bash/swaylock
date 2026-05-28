@@ -73,6 +73,7 @@ _swaylock()
     --separator-color
     --show-failed-attempts
     --show-keyboard-layout
+    --space
     --text-caps-lock-color
     --text-clear-color
     --text-color
@@ -91,12 +92,23 @@ _swaylock()
     'solid_color'
   )
 
+  space=(
+    'space'
+    'ignore-first'
+    'ignore'
+    'clear'
+  )
+
   case $prev in
     -c|--color)
       return
       ;;
     --scaling)
       COMPREPLY=($(compgen -W "${scaling[*]}" -- "$cur"))
+      return
+      ;;
+    --space)
+      COMPREPLY=($(compgen -W "${space[*]}" -- "$cur"))
       return
       ;;
     -i|--image)

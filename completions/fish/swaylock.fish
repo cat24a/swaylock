@@ -46,6 +46,7 @@ complete -c swaylock -l scaling                -s s --description "Image scaling
 complete -c swaylock -l separator-color             --description "Sets the color of the lines that separate highlight segments."
 complete -c swaylock -l show-failed-attempts   -s F --description "Show current count of failed authentication attempts."
 complete -c swaylock -l show-keyboard-layout   -s k --description "Display the current xkb layout while typing."
+complete -c swaylock -l space                       --description "Spacebar behaviour: space, ignore-first, ignore, clear."
 complete -c swaylock -l text-caps-lock-color        --description "Sets the color of the text when Caps Lock is active."
 complete -c swaylock -l text-clear-color            --description "Sets the color of the text when cleared."
 complete -c swaylock -l text-color                  --description "Sets the color of the text."
