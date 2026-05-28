@@ -168,6 +168,34 @@ void swaylock_handle_key(struct swaylock_state *state,
 		schedule_input_idle(state);
 		damage_state(state);
 		break;
+	case XKB_KEY_space:
+		switch (state->args.space) {
+		case SPACEBAR_MODE_IGNORE:
+			break;
+		case SPACEBAR_MODE_IGNORE_FIRST:
+			if (state->password.len == 0)
+				break;
+			// fallthrough
+		case SPACEBAR_MODE_SPACE:
+			append_ch(&state->password, 32);
+			state->input_state = INPUT_STATE_LETTER;
+			schedule_password_clear(state);
+			schedule_input_idle(state);
+			update_highlight(state);
+			damage_state(state);
+			break;
+		case SPACEBAR_MODE_CLEAR:
+			clear_password_buffer(&state->password);
+			state->input_state = INPUT_STATE_CLEAR;
+			cancel_password_clear(state);
+			schedule_input_idle(state);
+			damage_state(state);
+			break;
+		case SPACEBAR_MODE_INVALID:
+			assert(0);
+			break;
+		}
+		break;
 	case XKB_KEY_Caps_Lock:
 	case XKB_KEY_Shift_L:
 	case XKB_KEY_Shift_R:
@@ -214,4 +242,18 @@ void swaylock_handle_key(struct swaylock_state *state,
 		}
 		break;
 	}
+}
+
+enum spacebar_mode parse_spacebar_mode(const char *mode) {
+	if (strcmp(mode, "space") == 0) {
+		return SPACEBAR_MODE_SPACE;
+	} else if (strcmp(mode, "ignore-first") == 0) {
+		return SPACEBAR_MODE_IGNORE_FIRST;
+	} else if (strcmp(mode, "ignore") == 0) {
+		return SPACEBAR_MODE_IGNORE;
+	} else if (strcmp(mode, "clear") == 0) {
+		return SPACEBAR_MODE_CLEAR;
+	}
+	swaylock_log(LOG_ERROR, "Unsupported spacebar mode: %s", mode);
+	return SPACEBAR_MODE_INVALID;
 }

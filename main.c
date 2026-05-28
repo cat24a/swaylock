@@ -483,6 +483,7 @@ static int parse_options(int argc, char **argv, struct swaylock_state *state,
 		LO_TEXT_CAPS_LOCK_COLOR,
 		LO_TEXT_VER_COLOR,
 		LO_TEXT_WRONG_COLOR,
+		LO_SPACEBAR_MODE,
 	};
 
 	static struct option long_options[] = {
@@ -540,6 +541,7 @@ static int parse_options(int argc, char **argv, struct swaylock_state *state,
 		{"text-caps-lock-color", required_argument, NULL, LO_TEXT_CAPS_LOCK_COLOR},
 		{"text-ver-color", required_argument, NULL, LO_TEXT_VER_COLOR},
 		{"text-wrong-color", required_argument, NULL, LO_TEXT_WRONG_COLOR},
+		{"space", required_argument, NULL, LO_SPACEBAR_MODE},
 		{0, 0, 0, 0}
 	};
 
@@ -941,6 +943,14 @@ static int parse_options(int argc, char **argv, struct swaylock_state *state,
 		case LO_TEXT_WRONG_COLOR:
 			if (state) {
 				state->args.colors.text.wrong = parse_color(optarg);
+			}
+			break;
+		case LO_SPACEBAR_MODE:
+			if (state) {
+				state->args.space = parse_spacebar_mode(optarg);
+				if (state->args.space == SPACEBAR_MODE_INVALID) {
+					return 1;
+				}
 			}
 			break;
 		default:

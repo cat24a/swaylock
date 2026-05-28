@@ -48,9 +48,18 @@ struct swaylock_colors {
 	struct swaylock_colorset text;
 };
 
+enum spacebar_mode {
+	SPACEBAR_MODE_SPACE = 0,
+	SPACEBAR_MODE_IGNORE_FIRST,
+	SPACEBAR_MODE_IGNORE,
+	SPACEBAR_MODE_CLEAR,
+	SPACEBAR_MODE_INVALID,
+};
+
 struct swaylock_args {
 	struct swaylock_colors colors;
 	enum background_mode mode;
+	enum spacebar_mode space;
 	char *font;
 	uint32_t font_size;
 	uint32_t radius;
@@ -132,6 +141,7 @@ struct swaylock_image {
 	struct wl_list link;
 };
 
+enum spacebar_mode parse_spacebar_mode(const char *mode);
 void swaylock_handle_key(struct swaylock_state *state,
 		xkb_keysym_t keysym, uint32_t codepoint);
 
