@@ -55,6 +55,13 @@ Locks your Wayland session.
 *-v, --version*
 	Show the version number and quit.
 
+*--space* <mode>
+	Spacebar behaviour:
+	- _space_: insert a space character (default)
+	- _ignore-first_: if password field is empty, do nothing, otherwise insert a space character
+	- _ignore_: do nothing
+	- _clear_: clear the password field
+
 # APPEARANCE
 
 *-u, --no-unlock-indicator*
